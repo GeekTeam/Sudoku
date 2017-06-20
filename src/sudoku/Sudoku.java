@@ -1,6 +1,8 @@
 package sudoku;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -42,26 +44,34 @@ public class Sudoku {
 
     private Set<Integer> intersectingValues(int[][] puzzle, int row, int col) {
         Set<Integer> intersectingValues = new HashSet<>();
-        intersectingValues.addAll(sameRow(puzzle, row));
-        intersectingValues.addAll(sameCol(puzzle, col));
+        intersectingValues.addAll(distinctValues(puzzle, rowCoordinates(puzzle, row)));
+        intersectingValues.addAll(distinctValues(puzzle, colCoordinates(puzzle, col)));
         intersectingValues.addAll(sameSubsquare(puzzle, row, col));
         return intersectingValues;
     }
 
-    private Set<Integer> sameCol(int[][] puzzle, int col) {
-        Set<Integer> sameColVals = new HashSet<>();
+    private List<Coordinate> colCoordinates(int[][] puzzle, int col) {
+        List<Coordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < puzzle.length; i++) {
-            sameColVals.add(puzzle[i][col]);
+            coordinates.add(new Coordinate(i, col));
         }
-        return sameColVals;
+        return coordinates;
     }
 
-    private Set<Integer> sameRow(int[][] puzzle, int row) {
-        Set<Integer> sameRowVals = new HashSet<>();
-        for (int i = 0; i < puzzle[0].length; i++) {
-            sameRowVals.add(puzzle[row][i]);
+    private List<Coordinate> rowCoordinates(int[][] puzzle, int row) {
+        List<Coordinate> coordinates = new ArrayList<>();
+        for (int i = 0; i < puzzle.length; i++) {
+            coordinates.add(new Coordinate(row, i));
         }
-        return sameRowVals;
+        return coordinates;
+    }
+
+    private Set<Integer> distinctValues(int[][] puzzle, List<Coordinate> coordinates) {
+        Set<Integer> sameVals = new HashSet<>();
+        for (Coordinate coordinate : coordinates) {
+            sameVals.add(cellValue(puzzle, coordinate));
+        }
+        return sameVals;
     }
 
     private Set<Integer> sameSubsquare(int[][] puzzle, int row, int col) {
@@ -72,10 +82,14 @@ public class Sudoku {
         Set<Integer> sameSubsquareVals = new HashSet<>();
         for (int r = startRow; r < startRow + subsquareSize; r++) {
             for (int c = startCol; c < startCol + subsquareSize; c++) {
-                sameSubsquareVals.add(puzzle[r][c]);
+                sameSubsquareVals.add(cellValue(puzzle, new Coordinate(r, c)));
             }
         }
         return sameSubsquareVals;
+    }
+
+    private int cellValue(int[][] puzzle, Coordinate coordinate) {
+        return puzzle[coordinate.getRow()][coordinate.getCol()];
     }
 
 }
