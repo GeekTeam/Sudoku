@@ -44,23 +44,24 @@ public class Sudoku {
 
     private Set<Integer> intersectingValues(int[][] puzzle, int row, int col) {
         Set<Integer> intersectingValues = new HashSet<>();
-        intersectingValues.addAll(distinctValues(puzzle, rowCoordinates(puzzle, row)));
-        intersectingValues.addAll(distinctValues(puzzle, colCoordinates(puzzle, col)));
+        intersectingValues.addAll(distinctValues(puzzle, rowCoordinates(row, puzzle.length)));
+        intersectingValues.addAll(distinctValues(puzzle, colCoordinates(col, puzzle.length)));
+//        intersectingValues.addAll(distinctValues(puzzle, subsquareCoordinates(row, col, puzzle.length)));
         intersectingValues.addAll(sameSubsquare(puzzle, row, col));
         return intersectingValues;
     }
 
-    private List<Coordinate> colCoordinates(int[][] puzzle, int col) {
+    private List<Coordinate> colCoordinates(int col, int gridSize) {
         List<Coordinate> coordinates = new ArrayList<>();
-        for (int i = 0; i < puzzle.length; i++) {
+        for (int i = 0; i < gridSize; i++) {
             coordinates.add(new Coordinate(i, col));
         }
         return coordinates;
     }
 
-    private List<Coordinate> rowCoordinates(int[][] puzzle, int row) {
+    private List<Coordinate> rowCoordinates(int row, int gridSize) {
         List<Coordinate> coordinates = new ArrayList<>();
-        for (int i = 0; i < puzzle.length; i++) {
+        for (int i = 0; i < gridSize; i++) {
             coordinates.add(new Coordinate(row, i));
         }
         return coordinates;
@@ -90,6 +91,47 @@ public class Sudoku {
 
     private int cellValue(int[][] puzzle, Coordinate coordinate) {
         return puzzle[coordinate.getRow()][coordinate.getCol()];
+    }
+
+    public static List<Coordinate> subsquareCoordinates(int row, int col, int gridSize) {
+        List<Coordinate> list = new ArrayList<>();
+
+        if ((row == 2 && col == 2) || (row == 2 && col == 3) || (row == 3 && col == 3) || (row == 3 && col == 2)) {
+            // Bottom Right
+            list.add(new Coordinate(2, 2));
+            list.add(new Coordinate(3, 2));
+            list.add(new Coordinate(2, 3));
+            list.add(new Coordinate(3, 3));
+            return list;
+        }
+
+        if (row == 2 || row == 3) {
+            // Bottom Left
+            list.add(new Coordinate(2, 0));
+            list.add(new Coordinate(3, 0));
+            list.add(new Coordinate(2, 1));
+            list.add(new Coordinate(3, 1));
+            return list;
+        }
+
+        if (col == 0 || col == 1) {
+            // Top Left
+            list.add(new Coordinate(0, 0));
+            list.add(new Coordinate(1, 0));
+            list.add(new Coordinate(0, 1));
+            list.add(new Coordinate(1, 1));
+            return list;
+        }
+
+        if (col == 2 || col == 3) {
+            // Top Right
+            list.add(new Coordinate(0, 2));
+            list.add(new Coordinate(1, 2));
+            list.add(new Coordinate(0, 3));
+            list.add(new Coordinate(1, 3));
+        }
+
+        return list;
     }
 
 }
