@@ -96,42 +96,27 @@ public class Sudoku {
     public static List<Coordinate> subsquareCoordinates(int row, int col, int gridSize) {
         List<Coordinate> list = new ArrayList<>();
 
-        if ((row == 2 && col == 2) || (row == 2 && col == 3) || (row == 3 && col == 3) || (row == 3 && col == 2)) {
-            // Bottom Right
-            list.add(new Coordinate(2, 2));
-            list.add(new Coordinate(3, 2));
-            list.add(new Coordinate(2, 3));
-            list.add(new Coordinate(3, 3));
-            return list;
-        }
-
-        if (row == 2 || row == 3) {
-            // Bottom Left
-            list.add(new Coordinate(2, 0));
-            list.add(new Coordinate(3, 0));
-            list.add(new Coordinate(2, 1));
-            list.add(new Coordinate(3, 1));
-            return list;
-        }
-
-        if (col == 0 || col == 1) {
-            // Top Left
-            list.add(new Coordinate(0, 0));
-            list.add(new Coordinate(1, 0));
-            list.add(new Coordinate(0, 1));
-            list.add(new Coordinate(1, 1));
-            return list;
-        }
-
-        if (col == 2 || col == 3) {
-            // Top Right
-            list.add(new Coordinate(0, 2));
-            list.add(new Coordinate(1, 2));
-            list.add(new Coordinate(0, 3));
-            list.add(new Coordinate(1, 3));
+        for (int topRow = 0; topRow <= 2; topRow += 2) {
+            for (int leftCol = 0; leftCol <= 2; leftCol += 2) {
+                if (row == topRow || row == topRow + 1) {
+                    if (col == leftCol || col == leftCol + 1) {
+                        list.addAll(coordinatesForSubsquare(topRow, leftCol));
+                    }
+                }
+            }
         }
 
         return list;
+    }
+
+    private static List<Coordinate> coordinatesForSubsquare(int topRow, int leftCol) {
+        List<Coordinate> coordinates = new ArrayList<>();
+        for (int i = 0; i <= 1; i++) {
+            for (int j = 0; j <= 1; j++) {
+                coordinates.add(new Coordinate(topRow + i, leftCol + j));
+            }
+        }
+        return coordinates;
     }
 
 }
