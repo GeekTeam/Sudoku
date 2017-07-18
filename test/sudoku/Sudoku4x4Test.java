@@ -36,6 +36,13 @@ public class Sudoku4x4Test extends SudokuTest {
                         "3 0 0 1",  "3 4 2 1",
                         "4 0 0 2",  "4 3 1 2",
                         "2 0 0 3",  "2 1 4 3"
+                )),
+
+                dynamicTest("Requires sub-squares to solve", () -> sudokuTest(
+                        "3 0 0 0", "3 2 4 1",
+                        "0 0 2 0", "1 4 2 3",
+                        "0 1 0 0", "2 1 3 4",
+                        "0 0 0 2", "4 3 1 2"
                 ))
         );
     }

@@ -46,8 +46,7 @@ public class Sudoku {
         Set<Integer> intersectingValues = new HashSet<>();
         intersectingValues.addAll(distinctValues(puzzle, rowCoordinates(row, puzzle.length)));
         intersectingValues.addAll(distinctValues(puzzle, colCoordinates(col, puzzle.length)));
-//        intersectingValues.addAll(distinctValues(puzzle, subsquareCoordinates(row, col, puzzle.length)));
-        intersectingValues.addAll(sameSubsquare(puzzle, row, col));
+        intersectingValues.addAll(distinctValues(puzzle, subsquareCoordinates(row, col, puzzle.length)));
         return intersectingValues;
     }
 
@@ -75,20 +74,6 @@ public class Sudoku {
         return sameVals;
     }
 
-    private Set<Integer> sameSubsquare(int[][] puzzle, int row, int col) {
-        int subsquareSize = (int) Math.floor(Math.sqrt(puzzle.length));
-        int startRow = (row / subsquareSize) * subsquareSize;
-        int startCol = (col / subsquareSize) * subsquareSize;
-
-        Set<Integer> sameSubsquareVals = new HashSet<>();
-        for (int r = startRow; r < startRow + subsquareSize; r++) {
-            for (int c = startCol; c < startCol + subsquareSize; c++) {
-                sameSubsquareVals.add(cellValue(puzzle, new Coordinate(r, c)));
-            }
-        }
-        return sameSubsquareVals;
-    }
-
     private int cellValue(int[][] puzzle, Coordinate coordinate) {
         return puzzle[coordinate.getRow()][coordinate.getCol()];
     }
@@ -96,23 +81,20 @@ public class Sudoku {
     public static List<Coordinate> subsquareCoordinates(int row, int col, int gridSize) {
         List<Coordinate> list = new ArrayList<>();
 
-        for (int topRow = 0; topRow <= 2; topRow += 2) {
-            for (int leftCol = 0; leftCol <= 2; leftCol += 2) {
-                if (row == topRow || row == topRow + 1) {
-                    if (col == leftCol || col == leftCol + 1) {
-                        list.addAll(coordinatesForSubsquare(topRow, leftCol));
-                    }
-                }
-            }
+        if (gridSize == 4 || gridSize == 9) {
+            int subsquareSize = (int) Math.sqrt(gridSize);
+            int topRow = (row / subsquareSize) * subsquareSize;
+            int leftCol = (col / subsquareSize) * subsquareSize;
+            list.addAll(coordinatesForSubsquare(topRow, leftCol, subsquareSize));
         }
 
         return list;
     }
 
-    private static List<Coordinate> coordinatesForSubsquare(int topRow, int leftCol) {
+    private static List<Coordinate> coordinatesForSubsquare(int topRow, int leftCol, int subsquareSize) {
         List<Coordinate> coordinates = new ArrayList<>();
-        for (int i = 0; i <= 1; i++) {
-            for (int j = 0; j <= 1; j++) {
+        for (int i = 0; i < subsquareSize; i++) {
+            for (int j = 0; j < subsquareSize; j++) {
                 coordinates.add(new Coordinate(topRow + i, leftCol + j));
             }
         }
