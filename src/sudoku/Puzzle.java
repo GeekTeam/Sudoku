@@ -39,24 +39,32 @@ public class Puzzle {
         return coordinates;
     }
 
-    public List<Coordinate> subsquareCoordinates(int row, int col) {
+    public List<Coordinate> subsquareCoordinates(Coordinate coordinate) {
         List<Coordinate> list = new ArrayList<>();
 
         if (getLength() == 4 || getLength() == 9) {
-            int subsquareSize = (int) Math.sqrt(getLength());
-            int topRow = (row / subsquareSize) * subsquareSize;
-            int leftCol = (col / subsquareSize) * subsquareSize;
-            list.addAll(coordinatesForSubsquare(topRow, leftCol, subsquareSize));
+            list.addAll(coordinatesForSubsquare(subsquareTopLeft(coordinate), subsquareSize()));
         }
 
         return list;
     }
 
-    private List<Coordinate> coordinatesForSubsquare(int topRow, int leftCol, int subsquareSize) {
+    private Coordinate subsquareTopLeft(Coordinate coordinate) {
+        int subsquareSize = subsquareSize();
+        int topRow = (coordinate.getRow() / subsquareSize) * subsquareSize;
+        int leftCol = (coordinate.getCol() / subsquareSize) * subsquareSize;
+        return new Coordinate(topRow, leftCol);
+    }
+
+    private int subsquareSize() {
+        return (int) Math.sqrt(getLength());
+    }
+
+    private List<Coordinate> coordinatesForSubsquare(Coordinate topLeft, int subsquareSize) {
         List<Coordinate> coordinates = new ArrayList<>();
         for (int i = 0; i < subsquareSize; i++) {
             for (int j = 0; j < subsquareSize; j++) {
-                coordinates.add(new Coordinate(topRow + i, leftCol + j));
+                coordinates.add(new Coordinate(topLeft.getRow() + i, topLeft.getCol() + j));
             }
         }
         return coordinates;
@@ -78,17 +86,17 @@ public class Puzzle {
         Set<Integer> intersectingValues = new HashSet<>();
         intersectingValues.addAll(distinctValues(rowCoordinates(row)));
         intersectingValues.addAll(distinctValues(colCoordinates(col)));
-        intersectingValues.addAll(distinctValues(subsquareCoordinates(row, col)));
+        intersectingValues.addAll(distinctValues(subsquareCoordinates(new Coordinate(row, col))));
         return intersectingValues;
     }
 
-    boolean isEmpty(int row, int col) {
-        return cellValue(new Coordinate(row, col)) == 0;
+    boolean isEmpty(Coordinate coordinate) {
+        return cellValue(coordinate) == 0;
     }
 
-    Puzzle updatedWith(int row, int col, Integer value) {
+    Puzzle updatedWith(Coordinate coordinate, Integer value) {
         int[][] clone = this.puzzle.clone();
-        clone[row][col] = value;
+        clone[coordinate.getRow()][coordinate.getCol()] = value;
         return new Puzzle(clone);
     }
 

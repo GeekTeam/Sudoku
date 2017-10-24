@@ -5,24 +5,21 @@ import java.util.Set;
 
 public class Sudoku {
 
-    public int[][] solve(int[][] puzzle) {
+    public Puzzle solve(Puzzle puzzle) {
 
-        Puzzle puzzle1 = new Puzzle(puzzle);
-
-        for (int row = 0; row < puzzle1.getLength(); row++) {
-            for (int col = 0; col < puzzle1.getLength(); col++) {
-                if (puzzle1.isEmpty(row, col)) {
-                    Set<Integer> possibleValues = subtract(puzzle1.allPossibleValues(),
-                            puzzle1.intersectingValues(row, col));
+        for (int row = 0; row < puzzle.getLength(); row++) {
+            for (int col = 0; col < puzzle.getLength(); col++) {
+                if (puzzle.isEmpty(new Coordinate(row, col))) {
+                    Set<Integer> possibleValues = subtract(puzzle.allPossibleValues(),
+                        puzzle.intersectingValues(row, col));
                     if (possibleValues.size() == 1) {
-//                        return solve(puzzle1.updatedWith(row, col, first(possibleValues)).getPuzzle());
-                        return solve(puzzle1.updatedWith(row, col, first(possibleValues)).getPuzzle());
+                        return solve(puzzle.updatedWith(new Coordinate(row, col), first(possibleValues)));
                     }
                 }
             }
         }
 
-        return puzzle1.getPuzzle();
+        return puzzle;
     }
 
     private Integer first(Set<Integer> possibleValues) {

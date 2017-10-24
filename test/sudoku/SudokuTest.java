@@ -12,7 +12,7 @@ public class SudokuTest {
         int [][] puzzle   = buildGrid(even(rows));
         int [][] solution = buildGrid(odd(rows));
 
-        assertThat(sudoku.solve(puzzle), gridMatches(solution));
+        assertThat(sudoku.solve(new Puzzle(puzzle)).getPuzzle(), gridMatches(solution));
     }
 
     private String[] even(String[] rows) {

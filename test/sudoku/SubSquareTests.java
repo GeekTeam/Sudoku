@@ -12,7 +12,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_0_0IsInTheTopLeftSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(0, 0),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(0, 0)),
                 containsInAnyOrder(
                         coord(0, 0),
                         coord(1, 0),
@@ -23,7 +23,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_0_1IsInTheTopLeftSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(0, 1),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(0, 1)),
                 containsInAnyOrder(
                         coord(0, 0),
                         coord(1, 0),
@@ -33,7 +33,7 @@ public class SubSquareTests extends SudokuTest {
 
     @Test
     void cell_1_0IsInTheTopLeftSubsquare() {
-        assertThat(PUZZLE_4X4.subsquareCoordinates(1, 0),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(1, 0)),
                 containsInAnyOrder(
                         coord(0, 0),
                         coord(1, 0),
@@ -44,7 +44,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_0_2IsInTheTopRightSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(0, 2),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(0, 2)),
                 containsInAnyOrder(
                         coord(0, 2),
                         coord(1, 2),
@@ -55,7 +55,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_0_3IsInTheTopRightSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(0, 3),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(0, 3)),
                 containsInAnyOrder(
                         coord(0, 2),
                         coord(1, 2),
@@ -66,7 +66,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_2_0IsInTheBottomLeftSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(2, 0),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(2, 0)),
                 containsInAnyOrder(
                         coord(2, 0),
                         coord(3, 0),
@@ -77,7 +77,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_2_1IsInTheBottomLeftSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(2, 1),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(2, 1)),
                 containsInAnyOrder(
                         coord(2, 0),
                         coord(3, 0),
@@ -87,7 +87,7 @@ public class SubSquareTests extends SudokuTest {
 
     @Test
     void cell_3_0IsInTheBottomLeftSubsquare() {
-        assertThat(PUZZLE_4X4.subsquareCoordinates(3, 0),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(3, 0)),
                 containsInAnyOrder(
                         coord(2, 0),
                         coord(3, 0),
@@ -98,7 +98,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_2_2IsInTheBottomRightSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(2, 2),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(2, 2)),
                 containsInAnyOrder(
                         coord(2, 2),
                         coord(3, 2),
@@ -109,7 +109,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_2_3IsInTheBottomRightSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(2, 3),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(2, 3)),
                 containsInAnyOrder(
                         coord(2, 2),
                         coord(3, 2),
@@ -120,7 +120,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_3_3IsInTheBottomRightSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(3, 3),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(3, 3)),
                 containsInAnyOrder(
                         coord(2, 2),
                         coord(3, 2),
@@ -131,7 +131,7 @@ public class SubSquareTests extends SudokuTest {
     @Test
     void cell_3_2IsInTheBottomRightSubsquare() {
 
-        assertThat(PUZZLE_4X4.subsquareCoordinates(3, 2),
+        assertThat(PUZZLE_4X4.subsquareCoordinates(new Coordinate(3, 2)),
                 containsInAnyOrder(
                         coord(2, 2),
                         coord(3, 2),
