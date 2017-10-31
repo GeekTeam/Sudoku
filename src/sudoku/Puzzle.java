@@ -1,9 +1,6 @@
 package sudoku;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toSet;
@@ -39,7 +36,7 @@ public class Puzzle {
         return coordinates;
     }
 
-    public List<Coordinate> subsquareCoordinates(Coordinate coordinate) {
+    List<Coordinate> subsquareCoordinates(Coordinate coordinate) {
         List<Coordinate> list = new ArrayList<>();
 
         if (getLength() == 4 || getLength() == 9) {
@@ -70,11 +67,11 @@ public class Puzzle {
         return coordinates;
     }
 
-    int cellValue(Coordinate coordinate) {
+    private int cellValue(Coordinate coordinate) {
         return puzzle[coordinate.getRow()][coordinate.getCol()];
     }
 
-    Set<Integer> distinctValues(List<Coordinate> coordinates) {
+    private Set<Integer> distinctValues(List<Coordinate> coordinates) {
         Set<Integer> sameVals = new HashSet<>();
         for (Coordinate coordinate : coordinates) {
             sameVals.add(cellValue(coordinate));
@@ -82,11 +79,11 @@ public class Puzzle {
         return sameVals;
     }
 
-    Set<Integer> intersectingValues(int row, int col) {
+    Set<Integer> intersectingValues(Coordinate coordinate) {
         Set<Integer> intersectingValues = new HashSet<>();
-        intersectingValues.addAll(distinctValues(rowCoordinates(row)));
-        intersectingValues.addAll(distinctValues(colCoordinates(col)));
-        intersectingValues.addAll(distinctValues(subsquareCoordinates(new Coordinate(row, col))));
+        intersectingValues.addAll(distinctValues(rowCoordinates(coordinate.getRow())));
+        intersectingValues.addAll(distinctValues(colCoordinates(coordinate.getCol())));
+        intersectingValues.addAll(distinctValues(subsquareCoordinates(coordinate)));
         return intersectingValues;
     }
 
@@ -102,5 +99,15 @@ public class Puzzle {
 
     public int[][] getPuzzle() {
         return puzzle;
+    }
+
+    List<Coordinate> allCoordinates() {
+        List<Coordinate> coordinates = new LinkedList<>();
+        for (int row = 0; row < getLength(); row++) {
+            for (int col = 0; col < getLength(); col++) {
+                coordinates.add(new Coordinate(row, col));
+            }
+        }
+        return coordinates;
     }
 }
