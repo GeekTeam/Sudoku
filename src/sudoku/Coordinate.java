@@ -17,6 +17,10 @@ public class Coordinate {
         return col;
     }
 
+    Coordinate withOffset(int rowOffset, int colOffset) {
+        return new Coordinate(getRow() + rowOffset, getCol() + colOffset);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)

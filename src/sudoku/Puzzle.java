@@ -39,11 +39,15 @@ public class Puzzle {
     List<Coordinate> subsquareCoordinates(Coordinate coordinate) {
         List<Coordinate> list = new ArrayList<>();
 
-        if (getLength() == 4 || getLength() == 9) {
-            list.addAll(coordinatesForSubsquare(subsquareTopLeft(coordinate), subsquareSize()));
+        if (hasSubSquare()) {
+            list.addAll(coordinatesForSubsquare(subsquareTopLeft(coordinate)));
         }
 
         return list;
+    }
+
+    private boolean hasSubSquare() {
+        return getLength() == 4 || getLength() == 9;
     }
 
     private Coordinate subsquareTopLeft(Coordinate coordinate) {
@@ -57,11 +61,11 @@ public class Puzzle {
         return (int) Math.sqrt(getLength());
     }
 
-    private List<Coordinate> coordinatesForSubsquare(Coordinate topLeft, int subsquareSize) {
+    private List<Coordinate> coordinatesForSubsquare(Coordinate topLeft) {
         List<Coordinate> coordinates = new ArrayList<>();
-        for (int i = 0; i < subsquareSize; i++) {
-            for (int j = 0; j < subsquareSize; j++) {
-                coordinates.add(new Coordinate(topLeft.getRow() + i, topLeft.getCol() + j));
+        for (int i = 0; i < subsquareSize(); i++) {
+            for (int j = 0; j < subsquareSize(); j++) {
+                coordinates.add(topLeft.withOffset(i, j));
             }
         }
         return coordinates;
